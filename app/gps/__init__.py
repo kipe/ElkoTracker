@@ -83,7 +83,7 @@ class GPS(object):
         return l
 
     def _parse_rmc(self, data):
-        if data[1] == 'V':
+        if data[2] == 'V':
             self.fix = constants.NO_FIX
         elif self.fix == constants.NO_FIX:
             self.fix = constants.FIX_2D

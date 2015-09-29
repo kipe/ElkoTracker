@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.css">
+        <style type="text/css">
+            .leaflet-popup-content {
+                font-size: 8pt;
+                font-family: monospace;
+            }
+            td:first-child {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div id="map" style="height: 100%; width: 100%;">
+            </div>
+        </div>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.5/leaflet.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/2.0.0/screenfull.min.js"></script>
+
+        <script type="text/javascript" charset="utf-8">
+            var map = L.map('map').setView([0, 0], 13),
+                marker = L.marker().bindPopup('');
+
+            function handle_gps(data) {
+                var gps = JSON.parse(data);
+                console.log(gps);
+                map.panTo([gps.latitude, gps.longitude]);
+                marker
+                    .setLatLng([gps.latitude, gps.longitude])
+                    .setPopupContent('<table><tr><td>latitude</td><td>' + gps.latitude.toFixed(5) +
+                        '</td></tr><tr><td>longitude</td><td>' + gps.longitude.toFixed(5) +
+                        '</td></tr><tr><td>speed</td><td>' + gps.speed.toFixed(1) + ' m/s' +
+                        '</td></tr><tr><td>altitude</td><td>' + gps.altitude.toFixed(1) + ' m' +
+                        '</td></tr></table>');
+            };
+
+            $(document).ready(function() {
+                handle_gps('{{ location | safe }}');
+                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+                marker.addTo(map).openPopup();
+
+                setInterval(function() {
+                    $.get('/gps', handle_gps);
+                }, 1000);
+            });
+        </script>
+    </body>
+</html>

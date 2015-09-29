@@ -165,6 +165,8 @@ class GPS(object):
         if msg_type not in self.supported_sentences:
             return
 
+        print(msg)
+
         msg_crc = int(msg[-2:], 16)
         crc = 0
         for c in msg[1:-3]:

@@ -1,5 +1,10 @@
 from gps import SerialGPS
 from flask import Flask, render_template
+import logging
+
+# Disable Flask logging...
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 app = Flask(__name__)
 gps = SerialGPS()

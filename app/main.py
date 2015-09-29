@@ -15,7 +15,7 @@ c = Camera()
 
 @app.route('/')
 def index():
-    return render_template('index.html', location=gps.json())
+    return render_template('index.html', location=gps.json(), image=c.base64_img)
 
 
 @app.route('/gps')

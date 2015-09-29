@@ -18,7 +18,7 @@ class Camera(threading.Thread):
             while not self._stop.is_set():
                 stream = io.BytesIO()
                 c.capture(stream, 'jpeg')
-                self.base64_img = 'data:image/jpg;base64,%s' % (base64.encodestring(stream.getvalue()))
+                self.base64_img = 'data:image/jpg;base64,%s' % (base64.encodestring(stream.getvalue()).replace('\n', ''))
                 time.sleep(1)
 
             c.stop_preview()

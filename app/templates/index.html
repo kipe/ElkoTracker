@@ -39,7 +39,7 @@
                         '</td></tr><tr><td>longitude</td><td>' + gps.longitude.toFixed(5) +
                         '</td></tr><tr><td>speed</td><td>' + gps.speed.toFixed(1) + ' m/s' +
                         '</td></tr><tr><td>altitude</td><td>' + gps.altitude.toFixed(1) + ' m' +
-                        '</td></tr><tr><td colspan="2" style="text-align: center;">' + moment(gps.time).format('DD.MM. HH:mm') +
+                        '</td></tr><tr><td colspan="2" style="text-align: center;">' + moment(gps.time).format('DD.MM. HH:mm:ss') +
                         '</td></tr></table>');
             };
             function fetch_gps() {

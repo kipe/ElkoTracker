@@ -1,13 +1,16 @@
-from gps import SerialGPS
 from flask import Flask, render_template
 import logging
+from gps import SerialGPS
+from camera import Camera
 
 # Disable Flask logging...
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 app = Flask(__name__)
+
 gps = SerialGPS()
+c = Camera()
 
 
 @app.route('/')
@@ -20,7 +23,14 @@ def gps_info():
     return gps.json()
 
 
+@app.route('/camera')
+def camera_base64():
+    return c.get_base64()
+
+
 if __name__ == '__main__':
     gps.start()
+    c.start()
     app.run(host='0.0.0.0', port=80)
     gps.stop()
+    c.stop()

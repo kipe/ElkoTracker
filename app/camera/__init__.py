@@ -11,6 +11,7 @@ class Camera(threading.Thread):
 
     def run(self):
         with picamera.PiCamera() as c:
+            c.resolution = (320, 240)
             c.start_preview()
             time.sleep(2)
 

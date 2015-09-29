@@ -7,7 +7,7 @@ import picamera
 
 class Camera(threading.Thread):
     _stop = threading.Event()
-    stream = io.BytesIO()
+    base64_img = 'data:image/jpg;base64,'
 
     def run(self):
         with picamera.PiCamera() as c:
@@ -15,16 +15,12 @@ class Camera(threading.Thread):
             time.sleep(2)
 
             while not self._stop.is_set():
-                c.capture(self.stream, 'jpeg')
+                stream = io.BytesIO()
+                c.capture(stream, 'jpeg')
+                self.base64_img = 'data:image/jpg;base64,%s' % (base64.encodestring(stream.getvalue()))
                 time.sleep(1)
 
             c.stop_preview()
 
     def stop(self):
         self._stop.set()
-
-    def get_image(self):
-        return self.stream.getvalue()
-
-    def get_base64(self):
-        return 'data:image/jpg;base64,%s' % (base64.encodestring(self.get_image()))

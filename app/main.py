@@ -25,7 +25,7 @@ def gps_info():
 
 @app.route('/camera')
 def camera_base64():
-    return c.get_base64()
+    return c.base64_img
 
 
 if __name__ == '__main__':

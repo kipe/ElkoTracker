@@ -18,6 +18,7 @@ Technologies used
 * [jQuery](https://jquery.com/)
 * [Moment.js](http://momentjs.com/)
 * [Leaflet](http://leafletjs.com/)
+* [Pebble.js](https://pebble.github.io/pebblejs/)
 
 ### Hardware
 * [Raspberry Pi 2](https://www.raspberrypi.org/products/raspberry-pi-2-model-b/)

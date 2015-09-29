@@ -5,3 +5,5 @@ lib
 share
 include
 pip-selfcheck.json
+
+pebble/build

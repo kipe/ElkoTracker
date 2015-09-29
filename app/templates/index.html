@@ -41,8 +41,8 @@
                         '</td></tr><tr><td>speed</td><td>' + gps.speed.toFixed(1) + ' m/s' +
                         '</td></tr><tr><td>altitude</td><td>' + gps.altitude.toFixed(1) + ' m' +
                         '</td></tr><tr><td colspan="2" style="text-align: center;">' + moment(gps.time).format('DD.MM. HH:mm:ss') +
-                        '</td></tr><tr><td colspan="2" style="text-align: center;"><img src="' + image + '">' +
-                        '</td></tr></table>');
+                        '</td></tr></table>' +
+                        '<img src="' + image + '">');
             };
             function fetch_gps() {
                 $.get('/gps', function(data) {

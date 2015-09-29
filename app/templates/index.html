@@ -40,6 +40,13 @@
                         '</td></tr><tr><td>altitude</td><td>' + gps.altitude.toFixed(1) + ' m' +
                         '</td></tr></table>');
             };
+            function fetch_gps() {
+                $.get('/gps', function(data) {
+                    handle_gps(data);
+                }).always(function() {
+                    setTimeout(fetch_gps, 1000);
+                });
+            };
 
             $(document).ready(function() {
                 handle_gps('{{ location | safe }}');
@@ -47,10 +54,7 @@
                     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
                 marker.addTo(map).openPopup();
-
-                setInterval(function() {
-                    $.get('/gps', handle_gps);
-                }, 1000);
+                fetch_gps();
             });
         </script>
     </body>

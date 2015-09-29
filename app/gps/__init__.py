@@ -109,6 +109,7 @@ class GPS(object):
         self.vdop = float(data[17])
 
     def _parse_gga(self, data):
+        print(data)
         self.time.parse_time(data[1])
         self.latitude = self._parse_degrees(data[2], data[3])
         self.longitude = self._parse_degrees(data[4], data[5])
@@ -164,8 +165,6 @@ class GPS(object):
         msg_type = msg[3:6]
         if msg_type not in self.supported_sentences:
             return
-
-        print(msg)
 
         msg_crc = int(msg[-2:], 16)
         crc = 0

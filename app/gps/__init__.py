@@ -1,4 +1,4 @@
-from math import floor
+from math import floor, isinf
 import constants
 import json
 
@@ -69,6 +69,10 @@ class GPS(object):
             'speed': self.speed,
             'heading': self.heading,
             'altitude': self.altitude,
+            'satellites': self.satellites,
+            'pdop': -1 if isinf(self.pdop) else self.pdop,
+            'hdop': -1 if isinf(self.hdop) else self.hdop,
+            'vdop': -1 if isinf(self.vdop) else self.vdop,
         }
 
     def _parse_degrees(self, s, d):

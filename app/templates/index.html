@@ -45,7 +45,7 @@
                         '</td></tr><tr><td>altitude</td><td>' + gps.altitude.toFixed(1) + ' m' +
                         '</td></tr><tr><td colspan="2" style="text-align: center;">' + moment(gps.time).format('DD.MM. HH:mm:ss') +
                         '</td></tr></table>' +
-                        '<img src="' + image + '">');
+                        '<img src="' + image + '" style="width: 320px; height: 240px;">');
 
                 var track_latLngs = track.getLatLngs();
                 if (track_latLngs.length > 0 && track_latLngs[track_latLngs.length - 1].distanceTo(location) < 10) {

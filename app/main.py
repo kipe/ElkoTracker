@@ -16,7 +16,7 @@ c = Camera()
 
 @app.route('/')
 def index():
-    return render_template('index.html', location=gps.json(), image=c.base64_img, camera_interfal=int(os.environ.get('CAMERA_INTERVAL', 5000)))
+    return render_template('index.html', location=gps.json(), image=c.base64_img, camera_interval=int(os.environ.get('CAMERA_INTERVAL', 5000)))
 
 
 @app.route('/gps')

@@ -28,14 +28,17 @@
         <script type="text/javascript" charset="utf-8">
             var map = L.map('map').setView([0, 0], 13),
                 marker = L.marker().bindPopup(''),
+                track = L.polyline([]),
                 image = '{{ image | safe }}';
 
             function handle_gps(data) {
-                var gps = JSON.parse(data);
+                var gps = JSON.parse(data),
+                    location = L.latLng(gps.latitude, gps.longitude);
+
                 console.log(gps);
-                map.panTo([gps.latitude, gps.longitude]);
+                map.panTo(location);
                 marker
-                    .setLatLng([gps.latitude, gps.longitude])
+                    .setLatLng(location)
                     .setPopupContent('<table><tr><td>latitude</td><td>' + gps.latitude.toFixed(5) +
                         '</td></tr><tr><td>longitude</td><td>' + gps.longitude.toFixed(5) +
                         '</td></tr><tr><td>speed</td><td>' + gps.speed.toFixed(1) + ' m/s' +
@@ -43,6 +46,15 @@
                         '</td></tr><tr><td colspan="2" style="text-align: center;">' + moment(gps.time).format('DD.MM. HH:mm:ss') +
                         '</td></tr></table>' +
                         '<img src="' + image + '">');
+
+                var track_latLngs = track.getLatLngs();
+                if (track_latLngs.length > 0 && track_latLngs[track_latLngs.length - 1].distanceTo(location) < 10) {
+                    console.log('Track points are too close -> not adding.');
+                    return;
+                }
+
+                console.log('Adding location to track.');
+                track.addLatLng(location);
             };
             function fetch_gps() {
                 $.get('/gps', function(data) {
@@ -66,6 +78,7 @@
                     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
                 marker.addTo(map).openPopup();
+                track.addTo(map);
                 fetch_gps();
                 setTimeout(fetch_image, 15000);
             });

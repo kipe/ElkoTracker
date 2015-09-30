@@ -1,3 +1,4 @@
+import os
 import io
 import time
 import base64
@@ -12,6 +13,7 @@ class Camera(threading.Thread):
     def run(self):
         with picamera.PiCamera() as c:
             c.resolution = (320, 240)
+            c.rotation = int(os.environ.get('CAMERA_ROTATION', 0))
             c.start_preview()
             time.sleep(2)
 

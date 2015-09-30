@@ -45,8 +45,8 @@ class Datetime(object):
 class GPS(object):
     fix = constants.NO_FIX
     time = Datetime()
-    latitude = 61.064794
-    longitude = 28.094218
+    latitude = 0
+    longitude = 0
     # In m/s
     speed = 0
     satellites = []
@@ -90,8 +90,8 @@ class GPS(object):
 
         self.time.parse_time(data[1])
         self.time.parse_date(data[9])
-        # self.latitude = self._parse_degrees(data[3], data[4])
-        # self.longitude = self._parse_degrees(data[5], data[6])
+        self.latitude = self._parse_degrees(data[3], data[4])
+        self.longitude = self._parse_degrees(data[5], data[6])
         self.speed = float(data[7]) * constants.KNOTS_TO_MS
         self.heading = float(data[8])
 
@@ -109,10 +109,9 @@ class GPS(object):
         self.vdop = float(data[17])
 
     def _parse_gga(self, data):
-        print(data)
         self.time.parse_time(data[1])
-        # self.latitude = self._parse_degrees(data[2], data[3])
-        # self.longitude = self._parse_degrees(data[4], data[5])
+        self.latitude = self._parse_degrees(data[2], data[3])
+        self.longitude = self._parse_degrees(data[4], data[5])
 
         f = int(data[6])
         # If fix is invalid -> reset to invalid
@@ -126,8 +125,8 @@ class GPS(object):
         self.altitude = float(data[9])
 
     def _parse_gll(self, data):
-        # self.latitude = self._parse_degrees(data[1], data[2])
-        # self.longitude = self._parse_degrees(data[3], data[4])
+        self.latitude = self._parse_degrees(data[1], data[2])
+        self.longitude = self._parse_degrees(data[3], data[4])
         self.time.parse_time(data[5])
         if data[6] != 'A':
             self.fix = constants.NO_FIX

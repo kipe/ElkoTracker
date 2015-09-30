@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template
 import logging
 from gps import SerialGPS
@@ -15,7 +16,7 @@ c = Camera()
 
 @app.route('/')
 def index():
-    return render_template('index.html', location=gps.json(), image=c.base64_img)
+    return render_template('index.html', location=gps.json(), image=c.base64_img, camera_interfal=int(os.environ.get('CAMERA_INTERVAL', 5000)))
 
 
 @app.route('/gps')

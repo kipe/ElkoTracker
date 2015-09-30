@@ -68,7 +68,7 @@
                 $.get('/camera', function(data) {
                     image = data;
                 }).always(function() {
-                    setTimeout(fetch_image, 15000);
+                    setTimeout(fetch_image, {{ camera_interval }});
                 });
             };
 
@@ -80,7 +80,7 @@
                 marker.addTo(map).openPopup();
                 track.addTo(map);
                 fetch_gps();
-                setTimeout(fetch_image, 15000);
+                setTimeout(fetch_image, {{ camera_interval }});
             });
         </script>
     </body>

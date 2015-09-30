@@ -45,8 +45,8 @@ class Datetime(object):
 class GPS(object):
     fix = constants.NO_FIX
     time = Datetime()
-    latitude = 61.065643
-    longitude = 28.093524
+    latitude = 61.064794
+    longitude = 28.094218
     # In m/s
     speed = 0
     satellites = []
